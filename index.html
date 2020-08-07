@@ -1,14 +1,71 @@
 <head>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="patient.js"></script>
+    <script type="text/javascript" src="medication.js"></script>
     <script defer type="text/javascript" src="index.js"></script>
 </head>
 <body>
     <div class="content">
-        <h1>JS Rails App</h1>
-        <div class="data" id="data">
-            <h3>Patients:</h3>
-            <div id="patient-container">
-
+        <div class="content-inner">
+            <h1>JS Rails App</h1>
+            <div class="actions">
+                <button id="GetPatientsButton" type="button" onClick="getPatients()">Patients</button>
+                <button id="GetMedicationsButton" type="button" onClick="getMedications()">Medications</button>
+            </div>
+            <div class="data" id="data">
+                <div id="PatientContainer" class="patients-page">
+                    <h3>Patients:</h3>
+                    <div id="PatientData"></div>
+                    <form id="PatientForm" action="#" method="POST">
+                        <div class="form-control">
+                            <label>
+                                Patient Name
+                                <input type="text" name="patientName" id="PatientName" />
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label>
+                                Patient Age
+                                <input type="text" name="patientAge" id="PatientAge" />
+                            </label>
+                        </div>
+                        <button type="submit" onClick="submitPatient(event)">Submit</button>
+                    </form>
+                </div>
+                <div id="MedicationContainer" class="medications-page">
+                    <h3>Medications:</h3>
+                    <div id="MedicationData"></div>
+                    <form id="MedicationForm" class="form" action="#" method="POST">
+                        <div class="form-control">
+                            <label>
+                                Medication Name
+                                <input type="text" name="medicationName" id="MedicationName" />
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label>
+                                Medication Form
+                                <input type="text" name="medicationForm" id="MedForm" />
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label>
+                                Medication Strength
+                                <input type="text" name="medicationStrength" id="MedicationStrength" />
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label>
+                                Associated Patient
+                                <select name="associatedPatient" id="PatientDropdown">
+                                    <option value="">-- Select --</option>
+                                </select>
+                            </label>
+                        </div>
+                        <button type="submit" onClick="submitMedication(event)">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
