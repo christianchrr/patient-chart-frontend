@@ -1,0 +1,19 @@
+.actions {
+    margin: 50px 0;
+}
+
+.content {
+    text-align: center;
+}
+
+.form-control {
+    border: none;
+}
+
+.medications-page {
+    display: none;
+}
+
+.patients-page {
+    display: none;
+}
