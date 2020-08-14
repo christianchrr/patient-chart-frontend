@@ -1,27 +1,35 @@
 const PatientContainer = document.getElementById('PatientContainer')
 const PatientData = document.getElementById('PatientData')
+const PatientButton = document.getElementById("ShowPatientsButton")
+const PatientForm = document.getElementById("PatientForm")
 const MedicationContainer = document.getElementById('MedicationContainer')
 const MedicationData = document.getElementById('MedicationData')
+const MedicationButton = document.getElementById("ShowMedicationsButton")
+const MedicationForm = document.getElementById("MedicationForm")
+
 const getPatientsPath = 'http://localhost:3000/patients/'
 const getMedicationsPath = 'http://localhost:3000/medications/'
 
-function getPatients() {
+fetchAndMakePatients()
+fetchAndMakeMedications()
+
+PatientButton.addEventListener('click', showPatients)
+MedicationButton.addEventListener('click', showMedications)
+
+function fetchAndMakePatients() {
     fetch(getPatientsPath)
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(patientsArray){
-            patientsArray.forEach(function(patient){
+        .then(function (patientsArray) {
+            patientsArray.forEach(function (patient) {
                 return new Patient(patient)
             })
-            Patient.renderAllPatients(PatientData);
-            MedicationContainer.style.display = 'none';
-            PatientContainer.style.display = 'block';
+            Patient.renderAllPatients(PatientData)
         })
 }
 
-function getMedications() {
-    MedicationData.innerText = '';
+function fetchAndMakeMedications() {
     fetch(getMedicationsPath)
         .then(function(response) {
             return response.json();
@@ -31,22 +39,24 @@ function getMedications() {
                 return new Medication(medication)
             })
             Medication.renderAllMedications(MedicationData);
-            MedicationContainer.style.display = 'block';
-            PatientContainer.style.display = 'none';
             populatePatientDropdown();
         })
 }
 
+
+function showPatients() {
+    MedicationContainer.style.display = 'none';
+    PatientContainer.style.display = 'block';
+}
+
+function showMedications() {
+    MedicationContainer.style.display = 'block';
+    PatientContainer.style.display = 'none';
+}
+
 function populatePatientDropdown() {
     let PatientDropdown = document.getElementById("PatientDropdown")
-    let length = PatientDropdown.options.length;
-    for (let i = length-1; i >= 0; i--) {
-        PatientDropdown.options[i] = null;
-    }
-    let defaultOption = document.createElement('option');
-    defaultOption.text = '-- Select --';
-    defaultOption.value = '';
-    PatientDropdown.add(defaultOption);
+
     fetch(getPatientsPath)
         .then(function(response) {
             return response.json();
@@ -77,10 +87,11 @@ function submitPatient(e) {
             "age": patientAge
         })
     })
+    fetchAndMakePatients();
 }
 
 function submitMedication(e) {
-    e.preventDefault();
+    e.preventDefault(e);
 
     let medicationName = document.getElementById("MedicationName").value;
     let medicationForm = document.getElementById("MedForm").value;
@@ -99,4 +110,5 @@ function submitMedication(e) {
             "patient_id": patientId
         })
     })
+    fetchAndMakeMedications();
 }
